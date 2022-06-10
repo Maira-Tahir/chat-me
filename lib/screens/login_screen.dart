@@ -7,7 +7,7 @@ class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState(); // Some comment
 }
 
 class _LoginScreenState extends State<LoginScreen> {
