@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231243824623",
+    "project_id": "chatme-5544d",
+    "storage_bucket": "chatme-5544d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231243824623:android:fdda3451fbf74e96fe4a1a",
+        "android_client_info": {
+          "package_name": "com.maira.chat_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231243824623-juj2f2qc5upjeftjb8oigoqos5degeq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvD9HpaYREv019EV3GXt2CZV1zEfg8Slw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231243824623-juj2f2qc5upjeftjb8oigoqos5degeq4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
