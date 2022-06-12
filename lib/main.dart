@@ -1,10 +1,16 @@
+import 'package:chat_me/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_me/screens/welcome_screen.dart';
 import 'package:chat_me/screens/login_screen.dart';
 import 'package:chat_me/screens/registration_screen.dart';
 import 'package:chat_me/screens/chat_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(FlashChat());
 }
 

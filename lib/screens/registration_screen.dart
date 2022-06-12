@@ -15,6 +15,9 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late String email;
   late String password;
+  final _auth = FirebaseAuth.instance;
+
+  bool showSpinnner = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,11 +72,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               RoundedButton(
                 color: Colors.blueAccent,
                 title: 'Register',
-                onPressed: () {
-                  print(email);
-                  print(password);
+                onPressed: () async {
+                  try {
+                    UserCredential newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                    if (newUser != null) {
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    }
+                  } catch (e) {
+                    print(e.toString());
+                  }
                   //Go to login screen.
-                  Navigator.pushNamed(context, ChatScreen.id);
                 },
               ),
             ],

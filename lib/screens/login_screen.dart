@@ -1,3 +1,4 @@
+import 'package:chat_me/screens/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_me/components/rounded_button.dart';
@@ -11,10 +12,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  String email = '';
+  String password = '';
+
+  bool showSpinner = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
-                  //Do something with the user input.
+                  email = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your email',
@@ -56,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 enableSuggestions: false,
                 autocorrect: false,
                 onChanged: (value) {
-                  //Do something with the user input.
+                  password = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your password',
@@ -69,34 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.lightBlueAccent,
                 title: 'Log In',
                 onPressed: () async {
+                  setState(() {
+                    showSpinner = true;
+                  });
                   try {
-                    await _auth
-                        .createUserWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text)
-                        .then((result) async {
-                      debugPrint('uID: ' + result.user!.uid.toString());
-                      debugPrint('email: ' + result.user!.email.toString());
-                      //create the new user object
-                      UserModel _newUser = UserModel(
-                          uid: result.user!.uid,
-                          email: result.user!.email!,
-                          name: nameController.text);
-                      //create the user in firestore
-                      _createUserFirestore(_newUser, result.user!);
-                      emailController.clear();
-                      passwordController.clear();
-                      // hideLoadingIndicator();
-                    });
-                  } on FirebaseAuthException catch (error) {
-                    // hideLoadingIndicator();
-                    debugPrint("The error isss: " + error.message!);
-                    // Get.snackbar('auth.signUpErrorTitle'.tr, error.message!,
-                    //     snackPosition: SnackPosition.BOTTOM,
-                    //     duration: const Duration(seconds: 3),
-                    //     backgroundColor:
-                    //         Get.theme.snackBarTheme.backgroundColor,
-                    //     colorText: Get.theme.snackBarTheme.actionTextColor);
+                    final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    }
+                  } catch (e) {
+                    print(e.toString());
                   }
                 },
               ),
